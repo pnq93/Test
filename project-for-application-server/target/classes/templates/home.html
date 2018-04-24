@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">IT Quiz</a>
+            <a th:if="${sessionHttp}" class="navbar-brand" th:href="@{/startQuiz}">Start Quiz</a>
+        </div>
+
+        <ul th:unless="${sessionHttp}" class="nav navbar-nav navbar-right">
+            <li><a th:href="@{/signUp}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+
+        <ul th:if="${sessionHttp}" class="nav navbar-nav navbar-right">
+            <li><a th:text="${sesLoginName}"> </a></li>
+            <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <!--<h3>Quiz</h3>-->
+    <!--Logged user: <p th:text="${sesLoginName}"></p>-->
+    <!--Session: <p th:text="${sessionHttp}"></p>-->
+
+    <div th:if="${isQuizStart}" class="container_quiz">
+
+        <div th:unless="${isResponseSend}" class="containerProgress">
+            <p>Actual progress: </p>
+            <div class="progress">
+                <div th:style="'width:'+ ${progress} +'%;'" class="progress-bar progress-bar-striped active"
+                     role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <p th:text="${progress} + '%'"/>
+                </div>
+            </div>
+        </div>
+
+        <h3><p th:unless="${isResponseSend}" th:unless="${endQuiz}" th:text="${question}"></p></h3>
+
+
+        <form th:unless="${isResponseSend}" th:action="@{/result}" th:method="GET">
+            <button th:if="${endQuiz}" th:action="@{/results}" type="button" class="btn btn-warning" type="submit"
+                    value="results" name="results">Send
+            </button>
+
+            <input th:unless="${endQuiz}" type="radio" name="response" value="1"> <a
+                th:text="${firstResponse}"></a><br>
+            <input th:unless="${endQuiz}" type="radio" name="response" value="2"> <a
+                th:text="${secondResponse}"></a><br>
+            <input th:unless="${endQuiz}" type="radio" name="response" value="3"> <a th:text="${thirdResponse}"></a><br>
+            <input th:unless="${endQuiz}" type="radio" name="response" value="4"> <a
+                th:text="${fourthResponse}"></a><br>
+            <button th:unless="${endQuiz}" type="button" class="btn btn-info" type="submit" value="sendResponse" name="sendResponse">Next
+            </button>
+        </form>
+
+    </div>
+    <p > <h2 th:if="${isResponseSend}"><b>Result of quiz:</b></h2>
+    <h1 th:if="${isResponseSend}" th:text="${result} + ' of 10'" ></h1></p>
+</div>
+</body>
+</html>

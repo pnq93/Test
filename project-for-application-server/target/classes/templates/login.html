@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/}">IT Quiz</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a th:href="@{/signUp}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="container" id="formContainer">
+            <form class="form-signin" id="login" role="form" th:action="@{/loginUser}" th:method="POST">
+                <h3 class="form-signin-heading">Sign In</h3>
+                <div th:unless="${user}"> <font color="red"><p th:text="${errorLogin}"/> </font></div>
+                <a href="#" id="flipToRecover" class="flipLink">
+                    <div id="triangle-topright"></div>
+                </a>
+                <input type="login" class="form-control" name="loginName" id="loginName" placeholder="Name" required autofocus>
+                <input type="password" class="form-control" name="loginPass" id="loginPass" placeholder="Password" required>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</body>
+</html>
